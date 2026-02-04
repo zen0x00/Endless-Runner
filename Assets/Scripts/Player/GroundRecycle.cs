@@ -2,58 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundChunkQueue : MonoBehaviour
+public class GroundRecycle : MonoBehaviour
 {
+
   public Transform player;
-  public float chunkLength = 20f;
+  public List<Transform> chunks;
+  public float chunkLength = 10f;
 
-  // Drag your 5 chunks here in Inspector (0,1,2,3,4)
-  public List<Transform> chunks = new List<Transform>();
-
-  private Queue<Transform> chunkQueue = new Queue<Transform>();
-
-  private float nextSpawnZ;
+  private Queue<Transform> chunkQueue;
 
   void Start()
   {
-    // Put chunks into queue in correct order
+
+    chunkQueue = new Queue<Transform>();
+
     foreach (Transform chunk in chunks)
     {
       chunkQueue.Enqueue(chunk);
     }
-
-    // Set nextSpawnZ after last chunk
-    nextSpawnZ = chunks[chunks.Count - 1].position.z + chunkLength;
   }
 
   void Update()
   {
-    RecycleChunks();
-  }
-
-  void RecycleChunks()
-  {
     Transform firstChunk = chunkQueue.Peek();
 
-    // If player passed the first chunk completely
+    // ✅ If player passed the first chunk
     if (player.position.z > firstChunk.position.z + chunkLength)
     {
-      // Remove first chunk from queue
-      Transform oldChunk = chunkQueue.Dequeue();
-
-      // Move it to the end
-      oldChunk.position = new Vector3(
-          oldChunk.position.x,
-          oldChunk.position.y,
-          nextSpawnZ
-      );
-
-      // Update next spawn position
-      nextSpawnZ += chunkLength;
-
-      // Add chunk back to queue end
-      chunkQueue.Enqueue(oldChunk);
+      RecycleChunk();
     }
+  }
+
+  void RecycleChunk()
+  {
+    // Remove first chunk
+    Transform oldChunk = chunkQueue.Dequeue();
+
+    // Find last chunk position
+    Transform lastChunk = null;
+    foreach (Transform chunk in chunkQueue)
+    {
+      lastChunk = chunk;
+    }
+
+    // Move old chunk after last chunk
+    oldChunk.position = new Vector3(
+        oldChunk.position.x,
+        oldChunk.position.y,
+        lastChunk.position.z + chunkLength
+    );
+
+    // Add chunk back to queue
+    chunkQueue.Enqueue(oldChunk);
   }
 }
 

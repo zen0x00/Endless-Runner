@@ -2,99 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class playermovement : MonoBehaviour
 {
-    public float forwardSpeed = 8f;        // Auto forward speed
-    public float laneChangeSpeed = 10f;    // Smooth lane switch speed
-    public float jumpForce = 6f;           // Jump power
+  public float forwardSpeed = 6f;
+  public float laneDistance = 2f;
+  public float smoothSideSpeed = 6f;
+  public float jumpForce = 7f;
+  public float gravityMultiplier = 2f;
 
-    private Rigidbody rb;
-    private bool isGrounded = true;
+  private float targetX = 0f;
 
-    // Lane positions
-    private Transform lane1;
-    private Transform lane2;
-    private Transform lane3;
+  private Rigidbody rb;
+  private bool isGrounded = true;
 
-    private Transform targetLane;
+  void Start()
+  {
+    rb = GetComponent<Rigidbody>();
+  }
 
-    void Start()
+  void Update()
+  {
+    transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime);
+    if (Input.GetKey(KeyCode.D))
     {
-        rb = GetComponent<Rigidbody>();
-
-        // Find lanes by tags
-        lane1 = GameObject.FindGameObjectWithTag("lane1").transform;
-        lane2 = GameObject.FindGameObjectWithTag("lane2").transform;
-        lane3 = GameObject.FindGameObjectWithTag("lane3").transform;
-
-        // Start always in middle lane
-        targetLane = lane2;
+      targetX = laneDistance;
     }
-
-    void Update()
+    else if (Input.GetKey(KeyCode.A))
     {
-        HandleLaneInput();
-        MoveToLane();
+      targetX = -laneDistance;
     }
-
-    void FixedUpdate()
+    else
     {
-        MoveForwardAlways(); // Runs nonstop
+      targetX = 0f;
     }
+    Vector3 newPos = transform.position;
+    newPos.x = Mathf.Lerp(transform.position.x, targetX, smoothSideSpeed * Time.deltaTime);
+    transform.position = newPos;
 
-    // ✅ Player always moves forward (never stops)
-    void MoveForwardAlways()
+    // ✅ Jump when pressing E
+    if (Input.GetKeyDown(KeyCode.E) && isGrounded)
     {
-        rb.velocity = new Vector3(
-            rb.velocity.x,
-            rb.velocity.y,
-            forwardSpeed
-        );
+      Jump();
     }
+  }
 
-    // ✅ Input only for lane switching + jump
-    void HandleLaneInput()
+  void Jump()
+  {
+    rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+    isGrounded = false;
+  }
+  private void OnCollisionEnter(Collision collision)
+  {
+    if (collision.gameObject.CompareTag("Ground"))
     {
-        if (Input.GetKeyDown(KeyCode.A))
-            targetLane = lane1;
-
-        if (Input.GetKeyDown(KeyCode.W))
-            targetLane = lane2;
-
-        if (Input.GetKeyDown(KeyCode.D))
-            targetLane = lane3;
-
-        // Jump with E key
-        if (Input.GetKeyDown(KeyCode.E) && isGrounded)
-            Jump();
+      isGrounded = true;
     }
-
-    // ✅ Smooth lane movement (left/middle/right)
-    void MoveToLane()
-    {
-        Vector3 newPosition = transform.position;
-        newPosition.x = targetLane.position.x;
-
-        transform.position = Vector3.Lerp(
-            transform.position,
-            newPosition,
-            laneChangeSpeed * Time.deltaTime
-        );
-    }
-
-    // ✅ Jump Function
-    void Jump()
-    {
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        isGrounded = false;
-    }
-
-    // ✅ Ground Check
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-            isGrounded = true;
-    }
+  }
 }
+
 
 
