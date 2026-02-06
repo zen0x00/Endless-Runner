@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class bobbygroundrecycle : MonoBehaviour
 {
+    public CoinSpawner coinSpawner;
     public ObstacleSpawner obstacleSpawner;
     public Transform player;      
     
@@ -12,7 +13,7 @@ public class bobbygroundrecycle : MonoBehaviour
 
     void Update()
     {
-        // If ground is behind the player
+       
         if (transform.position.z + groundLength < player.position.z)
         {
             RecycleGround();
@@ -21,9 +22,10 @@ public class bobbygroundrecycle : MonoBehaviour
 
     void RecycleGround()
     {
-        Vector3 moveAmount = Vector3.forward * groundLength * 2f;
+        Vector3 moveAmount = Vector3.forward * groundLength * 3f;
         transform.position += moveAmount;
         obstacleSpawner.SpawnObstacle();
+        coinSpawner.SpawnCoinLine();
     }
 
 }

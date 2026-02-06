@@ -58,11 +58,19 @@ public class Player : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
-{
-    if (collision.gameObject.CompareTag("Ground"))
     {
-        isGrounded = true;
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
     }
-}
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Coin")
+        {
+            Destroy(other.gameObject);
+        }
+    }
 
 }
