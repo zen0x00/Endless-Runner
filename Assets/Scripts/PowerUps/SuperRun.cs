@@ -37,6 +37,6 @@ public class SuperRun : MonoBehaviour
         player.speed/=SpeedMultiplier;
         c.a=Original;
         mat.color=c;
-    }
+    } 
     
 }
