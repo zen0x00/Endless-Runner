@@ -425,7 +425,7 @@ MonoBehaviour:
   spawnZ: 5
   spawnY: 0.5
   ObstacleSpawnPoint: {fileID: 897961726}
-  obstacleSpawnlane: 0
+  obstacleSpawnlanes: 
 --- !u!114 &328355798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1212,7 +1212,7 @@ MonoBehaviour:
   spawnZ: 5
   spawnY: 0.5
   ObstacleSpawnPoint: {fileID: 1449851695}
-  obstacleSpawnlane: 0
+  obstacleSpawnlanes: 
 --- !u!114 &1156500491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1705,7 +1705,7 @@ MonoBehaviour:
   spawnZ: 5
   spawnY: 0.5
   ObstacleSpawnPoint: {fileID: 224953949}
-  obstacleSpawnlane: 0
+  obstacleSpawnlanes: 
 --- !u!114 &1668872475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1841,7 +1841,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 19acf4250edb9634bbfa89fee876300d, type: 2}
+  - {fileID: 2100000, guid: ee1df81b3aded534eb81e9429c378c50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
