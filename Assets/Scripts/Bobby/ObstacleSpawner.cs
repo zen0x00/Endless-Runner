@@ -3,13 +3,13 @@ public class ObstacleSpawner : MonoBehaviour
 {
     public GameObject obstaclePrefab;
     public Transform[] lanes;   
-    
-    public Player player;
     public float spawnZ = 10f;  
     public float spawnY = 0.5f; 
         
     public Transform ObstacleSpawnPoint;
-    public void SpawnObstacle()
+
+    public int obstacleSpawnlane ;
+    public void SpawnObstacle(int playerLine)
     {
         
         
@@ -19,9 +19,11 @@ public class ObstacleSpawner : MonoBehaviour
                 Destroy(child.gameObject);
         }
 
-        int laneIndex = player.currentLane+1;
+        int laneIndex = playerLine+1;
         
         laneIndex = Mathf.Clamp(laneIndex, 0, lanes.Length - 1);
+
+        obstacleSpawnlane = laneIndex;
 
          Vector3 spawnPos = new Vector3(
             lanes[laneIndex].position.x,             
