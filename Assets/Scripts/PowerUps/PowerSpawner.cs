@@ -11,7 +11,7 @@ public class PowerSpawner : MonoBehaviour
    public float SpawnDistance=30f;
    float timer;
    bool Power=true;
-   float[] lanes = {-2f,0f,2f};
+   float[] lanes = {-2.5f,0f,2.5f};
     void Update()
     {
         timer+=Time.deltaTime;

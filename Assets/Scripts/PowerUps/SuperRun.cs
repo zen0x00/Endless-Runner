@@ -33,7 +33,18 @@ public class SuperRun : MonoBehaviour
         c.a = fadeAmount;
         mat.color = c;
         
-        yield return new WaitForSeconds(Duration);
+        yield return new WaitForSeconds(Duration-2f);
+        mat.color=Color.red;
+        yield return new WaitForSeconds(0.2f);
+        mat.color=c;
+        yield return new WaitForSeconds(0.2f);
+        mat.color=Color.red;
+        yield return new WaitForSeconds(0.2f);
+        mat.color=c;
+        yield return new WaitForSeconds(0.2f);
+        mat.color=Color.red;
+        yield return new WaitForSeconds(0.2f);
+        mat.color=c;
         player.speed/=SpeedMultiplier;
         c.a=Original;
         mat.color=c;
