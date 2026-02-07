@@ -8,8 +8,10 @@ public class PowerSpawner : MonoBehaviour
    public GameObject Magnet;
    public Transform player;
    public float SpawnInterval=15f;
+   public float SpawnDistance=30f;
    float timer;
    bool Power=true;
+   float[] lanes = {-2f,0f,2f};
     void Update()
     {
         timer+=Time.deltaTime;
@@ -22,7 +24,8 @@ public class PowerSpawner : MonoBehaviour
     }
     void SuperPowerInterval()
     {
-        Vector3 spawnpos=player.position +new Vector3(0,0,30f);
+        float RandomLanex=lanes[Random.Range(0,lanes.Length)];
+        Vector3 spawnpos=new Vector3(RandomLanex,0.5f,player.position.z+SpawnDistance);
         if (Power)
         {
             Instantiate(SuperRun,spawnpos,Quaternion.identity);
