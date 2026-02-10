@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bobbygroundrecycle : MonoBehaviour
+public class groundrecycleScript : MonoBehaviour
 {
     public CoinSpawner coinSpawner;
     public ObstacleSpawner obstacleSpawner;
@@ -27,17 +27,11 @@ public class bobbygroundrecycle : MonoBehaviour
         Vector3 moveAmount = Vector3.forward * groundLength * 3f;
         transform.position += moveAmount;
 
-        int PlayerLane = GetplayerLane();
 
-        obstacleSpawner.SpawnObstacle(PlayerLane);
-        coinSpawner.SpawnCoinLine(obstacleSpawner.obstacleSpawnlanes);
+        obstacleSpawner.SpawnObstacle();
+        coinSpawner.SpawnCoinLine();
+        obstacleSpawner.nextExerciseStep();
     }
 
-    int GetplayerLane()
-    {
-        if(playerSript.targetX>0) return 2;
-        if(playerSript.targetX<0) return 0;
-        return 1;
-
-    }
+    
 }
