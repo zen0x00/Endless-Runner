@@ -102,12 +102,12 @@ public class playermovement : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.tag=="Ground")
         {
             isGrounded = true;
         }
 
-        if (collision.gameObject.CompareTag("Obstacle") && !isGameOver)
+        if (collision.gameObject.tag=="Obstacle" && !isGameOver)
         {
             isGameOver = true;
 
@@ -119,7 +119,7 @@ public class playermovement : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Coin"))
+        if (other.gameObject.tag=="Coin")
         {
             Destroy(other.gameObject);
         }
