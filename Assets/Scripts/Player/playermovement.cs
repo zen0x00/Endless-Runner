@@ -12,6 +12,7 @@ public class playermovement : MonoBehaviour
   public float jumpForce = 7f;
   public float gravityMultiplier = 2f;
   public GameObject GameOver;
+  UIManager UI;
   
   
 
@@ -24,7 +25,7 @@ public class playermovement : MonoBehaviour
   {
     rb = GetComponent<Rigidbody>();
    
-    
+    UI = FindObjectOfType<UIManager>();
     
     int level= PlayerPrefs.GetInt("Level",0);
     if (level == 0)
@@ -87,6 +88,8 @@ public class playermovement : MonoBehaviour
         if (collision.gameObject.tag == "Obstacle")
         {
             GameOver.SetActive(true);
+            
+            UI.FinalGameUpdation();
             Time.timeScale=0f;
             Debug.Log("Collided");
         }
@@ -101,10 +104,7 @@ public class playermovement : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
-    // public void Reset()
-    // {
-    //   transform.position=StartPosition;
-    // }
+    
 
 }
 
