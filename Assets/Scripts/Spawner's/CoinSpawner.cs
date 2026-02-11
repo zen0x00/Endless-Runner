@@ -28,7 +28,7 @@ public class CoinSpawner : MonoBehaviour
 
         int step = obstacleSpawner.GetExerciseStep();
 
-        Debug.Log(step);
+        // Debug.Log(step);
 
         if (step==0)
         {
