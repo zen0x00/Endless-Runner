@@ -1370,6 +1370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a5059193e46b3438776f4544a75612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacleSpawner: {fileID: 189054868}
   coinPrefab: {fileID: 1061810453130469091, guid: 659a1227f70b9744b97feb22d2e7688a,
     type: 3}
   lanes:
@@ -4016,6 +4017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a5059193e46b3438776f4544a75612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacleSpawner: {fileID: 867215268}
   coinPrefab: {fileID: 1061810453130469091, guid: 659a1227f70b9744b97feb22d2e7688a,
     type: 3}
   lanes:
@@ -7042,6 +7044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a5059193e46b3438776f4544a75612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacleSpawner: {fileID: 1527170558}
   coinPrefab: {fileID: 1061810453130469091, guid: 659a1227f70b9744b97feb22d2e7688a,
     type: 3}
   lanes:
