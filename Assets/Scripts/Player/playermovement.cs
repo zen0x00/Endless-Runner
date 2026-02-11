@@ -1,115 +1,128 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class playermovement : MonoBehaviour
 {
-  LevelManger levelManger;
-  public float forwardSpeed = 6f;
-  public float laneDistance = 2f;
-  public float smoothSideSpeed = 6f;
-  public float jumpForce = 7f;
-  public float gravityMultiplier = 2f;
-  public GameObject GameOver;
-  
-  
+    public float forwardSpeed = 6f;
+    public float laneDistance = 2f;
+    public float smoothSideSpeed = 6f;
+    public float jumpForce = 7f;
 
-  public float targetX = 0f;
+    public GameObject GameOver;
 
-  private Rigidbody rb;
-  bool isGrounded = true;
+    Rigidbody rb;
+    UIManager UI;
 
-  void Start()
-  {
-    rb = GetComponent<Rigidbody>();
-   
-    
-    
-    int level= PlayerPrefs.GetInt("Level",0);
-    if (level == 0)
-    {
-      forwardSpeed =6f;
-    }
-    if (level == 1)
-    {
-      forwardSpeed =8f;
-    }
-    if (level == 2)
-    {
-      forwardSpeed =10f;
-    }
-  }
+    public float targetX = 0f;
+    bool isGrounded = true;
+    bool isGameOver = false;
 
-  void Update()
-  {
-    if (isGrounded){
-      transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime);
-    }
-    else
+    void Start()
     {
-      transform.Translate(Vector3.forward * forwardSpeed* 0.7f * Time.deltaTime);
-      
-    }
-    if (Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow))
-    {
-      targetX = laneDistance;
-    }
-    else if (Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.LeftArrow))
-    {
-      targetX = -laneDistance;
-    }
-    else
-    {
-      targetX = 0f;
-    }
-    Vector3 newPos = transform.position;
-    newPos.x = Mathf.Lerp(transform.position.x, targetX, smoothSideSpeed * Time.deltaTime);
-    transform.position = newPos;
-    if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-    {
-      Jump();
-    }
-  }
+        rb = GetComponent<Rigidbody>();
+        UI = FindObjectOfType<UIManager>();
 
-  void Jump()
-  {
-    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-    isGrounded = false;
-  }
+        int level = PlayerPrefs.GetInt("Level", 0);
 
-   private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (level == 0)
         {
-          isGrounded = true;
+            forwardSpeed = 6f;
         }
-        if (collision.gameObject.tag == "Obstacle")
+        else if (level == 1)
         {
+            forwardSpeed = 8f;
+        }
+        else if (level == 2)
+        {
+            forwardSpeed = 10f;
+        }
+    }
+
+    void Update()
+    {
+        if (isGameOver)
+        {
+            return;
+        }
+
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            targetX = laneDistance;
+        }
+        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            targetX = -laneDistance;
+        }
+        else
+        {
+            targetX = 0f;
+        }
+
+        bool isInMiddleLane = Mathf.Abs(rb.position.x) < 0.1f;
+
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && isGrounded && isInMiddleLane)
+        {
+            Jump();
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (isGameOver)
+        {
+            return;
+        }
+
+        Vector3 pos = rb.position;
+
+        float currentSpeed;
+
+        if (isGrounded)
+        {
+            currentSpeed = forwardSpeed;
+        }
+        else
+        {
+            currentSpeed = forwardSpeed * 0.8f;
+        }
+
+        pos.z += currentSpeed * Time.fixedDeltaTime;
+        pos.x = Mathf.Lerp(pos.x, targetX, smoothSideSpeed * Time.fixedDeltaTime);
+
+        
+        rb.MovePosition(new Vector3(pos.x, rb.position.y, pos.z));
+    }
+
+    void Jump()
+    {
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        isGrounded = false;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag=="Ground")
+        {
+            isGrounded = true;
+        }
+
+        if (collision.gameObject.tag=="Obstacle" && !isGameOver)
+        {
+            isGameOver = true;
+
             GameOver.SetActive(true);
-            Time.timeScale=0f;
-            Debug.Log("Collided");
+            UI.FinalGameUpdation();
+            Time.timeScale = 0f;
         }
-    
     }
-
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Coin")
+        if (other.gameObject.tag=="Coin")
         {
             Destroy(other.gameObject);
         }
     }
-    // public void Reset()
-    // {
-    //   transform.position=StartPosition;
-    // }
-
+    
 }
-
-
-
-
-
-

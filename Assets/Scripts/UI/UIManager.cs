@@ -1,5 +1,6 @@
 
 using System.Collections;
+using TMPro;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,12 +12,15 @@ public class UIManager : MonoBehaviour
     [SerializeField]GameObject CountdownPannel;
     [SerializeField]TMPro.TMP_Text CountdownText;
     [SerializeField]GameObject SettingsPannel;
+    [SerializeField]TextMeshProUGUI GameOver_Score;
+    [SerializeField]TextMeshProUGUI GameOver_Coins;
     public GameObject LevelsPannel;
 
     public playermovement player;
     
     static bool SkipMenu=false;
     static bool SkipLevelPanel = false;
+   
 
     
     
@@ -140,6 +144,12 @@ public class UIManager : MonoBehaviour
         player.enabled=true;
         
         
+    }
+    public void FinalGameUpdation()
+    {
+        GameOver_Coins.text = "Coins: " + ScoreCalculation.FinalCoins;
+        GameOver_Score.text = "Score: " + ScoreCalculation.FinalScore;
+
     }
     
 }

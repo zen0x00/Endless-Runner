@@ -11,6 +11,8 @@ public class ScoreCalculation : MonoBehaviour
      int coinsCollected=0;
     float timer=0;
     int timeUpdated;
+    public static int FinalScore;
+    public static int FinalCoins;
     void Start()
     {
        
@@ -19,15 +21,17 @@ public class ScoreCalculation : MonoBehaviour
     
     void Update()
     {
-         timer+=Time.deltaTime;
-         timeUpdated=(int)timer;
-         Score.text=timeUpdated.ToString();
+         timer+=Time.deltaTime*10;
+         FinalScore=(int)timer;
+         
+         Score.text=FinalScore.ToString();
     }
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Coin")
         {
             coinsCollected++;
+            FinalCoins=coinsCollected;
             Coins.text=coinsCollected.ToString();
     
         }
