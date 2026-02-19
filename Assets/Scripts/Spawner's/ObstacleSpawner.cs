@@ -89,7 +89,6 @@ public class ObstacleSpawner : MonoBehaviour
             );
 
             obs.transform.SetParent(transform);
-
         }
 
         
