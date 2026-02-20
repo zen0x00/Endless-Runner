@@ -6,13 +6,13 @@ public class playerhealth : MonoBehaviour
 {
   public Slider Healthbar;
   public GameObject GameoverPanel;
-  public playermovement playerMovement;
+  public Movement enemyPlayer;
   int health = 100;
   void Start()
   {
     Healthbar.maxValue = 100;
     Healthbar.value = health;
-    GameoverPanel.SetActive(false);
+    // GameoverPanel.SetActive(false);
   }
   public void Danger()
   {
@@ -20,13 +20,10 @@ public class playerhealth : MonoBehaviour
     Healthbar.value = health;
     if (health <= 0)
     {
-      playerMovement.enabled = false;
-      Invoke("GameOverPanel", 1f);
+      enemyPlayer.enabled = false;
+      GameoverPanel.SetActive(true);
+      
     }
-  }
-  void GameOverPanel()
-  {
-    GameoverPanel.SetActive(true);
   }
 }
 
