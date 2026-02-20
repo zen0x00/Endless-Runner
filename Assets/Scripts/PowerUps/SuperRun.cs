@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class SuperRun : MonoBehaviour
 {
-    public playermovement player;
+    public Movement player;
     [SerializeField]float SpeedMultiplier=2f;
     [SerializeField]float Duration=5f;
     public float fadeAmount=0.5f;
@@ -32,7 +32,7 @@ public class SuperRun : MonoBehaviour
     }
     IEnumerator superrun()
     {
-        player.forwardSpeed*=SpeedMultiplier;
+        player.speed*=SpeedMultiplier;
         Color c=mat.color;
         c.a = fadeAmount;
         mat.color = c;
@@ -58,7 +58,7 @@ public class SuperRun : MonoBehaviour
 
 
         mat.color=c;
-        player.forwardSpeed/=SpeedMultiplier;
+        player.speed/=SpeedMultiplier;
         c.a=Original;
         mat.color=c;
     } 

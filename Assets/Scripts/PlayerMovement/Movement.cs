@@ -4,8 +4,8 @@ using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
-{
-    [SerializeField]float speed=5f;
+{   
+    public float speed=5f;
     
     Rigidbody Rb;
     bool swimInput;
@@ -88,6 +88,7 @@ public class Movement : MonoBehaviour
             CurrentCoin=other.gameObject;
         }
         
+        
     }
     void OnTriggerExit(Collider other)
     {
@@ -96,6 +97,6 @@ public class Movement : MonoBehaviour
             CurrentCoin=null;
         }
     }
-
+    
 
 }

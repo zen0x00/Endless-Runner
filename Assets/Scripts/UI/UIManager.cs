@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]TextMeshProUGUI GameOver_Coins;
     public GameObject LevelsPannel;
 
-    public playermovement player;
+    public Movement player;
     
     static bool SkipMenu=false;
     static bool SkipLevelPanel = false;
